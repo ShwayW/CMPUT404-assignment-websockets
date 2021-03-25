@@ -63,8 +63,9 @@ myWorld = World()
 
 def set_listener( entity, data ):
     ''' do something with the update ! '''
+    myWorld.set(entity, data)
 
-myWorld.add_set_listener( set_listener )
+myWorld.add_set_listener(set_listener)
         
 @app.route('/')
 def hello():
