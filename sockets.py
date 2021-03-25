@@ -101,7 +101,8 @@ def read_ws(ws,client):
             print("WS RECV: %s" % msg)
             if (msg is not None):
                 packet = json.loads(msg)
-                send_all_json(packet)
+                myWorld.space[packet[0]] = packet[1]
+                send_all_json(packet[1])
             else:
                 break
     except:
@@ -115,7 +116,7 @@ def subscribe_socket(ws):
     # XXX: TODO IMPLEMENT ME
     client = Client()
     clients.append(client)
-    g = gevent.spawn( read_ws, ws, client )    
+    g = gevent.spawn(read_ws, ws, client)    
     print("Subscribing")
     try:
         while True:
@@ -152,7 +153,7 @@ def update(entity):
 @app.route("/world", methods=['POST','GET'])    
 def world():
     '''you should probably return the world here'''
-    return jsonify(myWorld.world())
+    return jsonify(myWorld.space)
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
